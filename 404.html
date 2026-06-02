@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page Not Found | Oluchukwu Anakor</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --border: #1e1e30;
+        --green: #00ff88;
+        --green-dim: #00ff8833;
+        --text: #e8e8f0;
+        --muted: #6b6b8a;
+        --mono: "Space Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+      }
+      .error-code {
+        font-size: clamp(6rem, 20vw, 10rem);
+        font-weight: 800;
+        color: var(--green);
+        line-height: 1;
+        opacity: 0.15;
+        letter-spacing: -0.05em;
+        margin-bottom: -1rem;
+      }
+      .label {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--green);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 4vw, 2.2rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+      }
+      p {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+      }
+      p em {
+        color: var(--green);
+        font-style: normal;
+      }
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        padding: 0.85rem 2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        background: var(--green);
+        color: #0a0a0f;
+        font-weight: 700;
+        display: inline-block;
+      }
+      .btn:hover {
+        background: #00cc6a;
+        transform: translateY(-2px);
+      }
+      .footer-note {
+        margin-top: 3rem;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--border);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="error-code">404</div>
+      <p class="label">// error: page_not_found</p>
+      <h1>Lost in the Cloud?</h1>
+      <p>
+        The page you're looking for doesn't exist — it may have been
+        <em>deleted, moved,</em> or you might have typed the wrong URL. Don't
+        worry, even the best engineers hit a 404 sometimes.
+      </p>
+      <a href="index.html" class="btn">↩ Back to Home</a>
+      <p class="footer-note">Oluchukwu Anakor · DecodeLabs 2026</p>
+    </div>
+  </body>
+</html>

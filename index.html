@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oluchukwu Anakor — Backend Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg2: #0f0f1a;
+        --card: #13131f;
+        --border: #1e1e30;
+        --green: #00ff88;
+        --green-dim: #00ff8833;
+        --blue: #4f8fff;
+        --text: #e8e8f0;
+        --muted: #6b6b8a;
+        --mono: "Space Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 4rem;
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--green);
+        letter-spacing: 0.1em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
+      }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 8rem 4rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-inner {
+        max-width: 900px;
+      }
+      .hero-tag {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--green);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.2s forwards;
+      }
+      .hero h1 {
+        font-size: clamp(3rem, 7vw, 6rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.4s forwards;
+      }
+      .hero h1 span {
+        color: var(--green);
+      }
+      .hero-desc {
+        font-family: var(--mono);
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.8;
+        max-width: 560px;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.6s forwards;
+      }
+      .hero-desc em {
+        color: var(--green);
+        font-style: normal;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.8s forwards;
+      }
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        padding: 0.85rem 2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: var(--green);
+        color: #0a0a0f;
+        border: none;
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        background: #00cc6a;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        background: transparent;
+        color: var(--green);
+        border: 1px solid var(--green);
+      }
+      .btn-secondary:hover {
+        background: var(--green-dim);
+        transform: translateY(-2px);
+      }
+      .orb {
+        position: absolute;
+        right: -100px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 136, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .status-bar {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        gap: 2rem;
+        padding: 1.5rem 4rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg2);
+        flex-wrap: wrap;
+      }
+      .status-item {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        animation: pulse 2s infinite;
+      }
+      section {
+        position: relative;
+        z-index: 1;
+        padding: 6rem 4rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--green);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .section-title {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-weight: 800;
+        margin-bottom: 3rem;
+        letter-spacing: -0.02em;
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .skill-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.8rem;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+      .skill-card:hover {
+        border-color: var(--green);
+        transform: translateY(-4px);
+      }
+      .skill-icon {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+      .skill-card h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .skill-card p {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1rem;
+      }
+      .tag {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+        background: var(--green-dim);
+        color: var(--green);
+        border-radius: 3px;
+        letter-spacing: 0.05em;
+      }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+      }
+      .project-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .project-card:hover {
+        transform: translateY(-4px);
+      }
+      .project-card:hover::before {
+        opacity: 1;
+      }
+      .project-num {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--green);
+        margin-bottom: 1rem;
+        letter-spacing: 0.1em;
+      }
+      .project-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+      }
+      .project-card p {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 1.2rem;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .about-text p {
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.9;
+        margin-bottom: 1rem;
+      }
+      .about-text p em {
+        color: var(--text);
+        font-style: normal;
+      }
+      .about-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .stat-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--green);
+        display: block;
+      }
+      .stat-label {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+      .contact-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 3rem;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .contact-box h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+      }
+      .contact-box p {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+      }
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      footer {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 2rem;
+        border-top: 1px solid var(--border);
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      footer span {
+        color: var(--green);
+      }
+      .divider {
+        position: relative;
+        z-index: 1;
+        height: 1px;
+        background: var(--border);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          padding: 7rem 1.5rem 3rem;
+        }
+        section {
+          padding: 4rem 1.5rem;
+        }
+        .status-bar {
+          padding: 1rem 1.5rem;
+          gap: 1rem;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .orb {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-logo">$ olu.anakor</div>
+      <ul class="nav-links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <p class="hero-tag">// Backend Developer</p>
+        <h1>Oluchukwu<br /><span>Anakor</span></h1>
+        <p class="hero-desc">
+          I build the systems that power the internet —
+          <em>APIs, databases, cloud infrastructure.</em>
+          Currently mastering cloud computing at DecodeLabs, shipping real
+          infrastructure with Azure.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+        </div>
+      </div>
+      <div class="orb"></div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="status-dot"></span> Available for opportunities
+      </div>
+      <div class="status-item">📍 Nigeria</div>
+      <div class="status-item">☁️ Cloud Computing Intern @ DecodeLabs</div>
+      <div class="status-item">🚀 Currently: Project 1 — The Global Launch</div>
+    </div>
+
+    <section id="about">
+      <p class="section-label">// 01. about_me</p>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm <em>Oluchukwu Anakor</em>, a backend developer with a passion
+            for building reliable, scalable systems. I care deeply about how
+            things work under the hood — the servers, the APIs, the data
+            pipelines.
+          </p>
+          <p>
+            Currently interning at <em>DecodeLabs</em>, where I'm learning to
+            architect cloud infrastructure on Azure. My goal is to become a
+            professional cloud engineer who can design systems that serve
+            millions of users globally.
+          </p>
+          <p>
+            I believe the best engineers are those who treat every
+            <em>error message as a teacher</em> and every deployment as a
+            milestone.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-box">
+            <span class="stat-num">Azure</span
+            ><span class="stat-label">Cloud Platform</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">2026</span
+            ><span class="stat-label">Batch Year</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">NG</span
+            ><span class="stat-label">Based In Nigeria</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="skills">
+      <p class="section-label">// 02. tech_stack</p>
+      <h2 class="section-title">What I Work With</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">☁️</div>
+          <h3>Cloud Infrastructure</h3>
+          <p>
+            Designing and deploying serverless, scalable infrastructure on major
+            cloud platforms.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">Azure Blob</span
+            ><span class="tag">CloudFront</span><span class="tag">IAM</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🔧</div>
+          <h3>Backend Development</h3>
+          <p>
+            Building APIs, server-side logic, and data-driven applications that
+            power real products.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">REST APIs</span><span class="tag">Databases</span
+            ><span class="tag">Server Logic</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🛡️</div>
+          <h3>Cloud Security</h3>
+          <p>
+            Applying least privilege principles, IAM roles, and bucket policies
+            to secure cloud resources.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">IAM Roles</span><span class="tag">RBAC</span
+            ><span class="tag">Bucket Policy</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">📦</div>
+          <h3>Static Site Hosting</h3>
+          <p>
+            Deploying globally accessible websites using object storage — zero
+            servers, infinite scale.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">HTML/CSS</span
+            ><span class="tag">Azure Static Web</span
+            ><span class="tag">Azure Hosting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="projects">
+      <p class="section-label">// 03. projects</p>
+      <h2 class="section-title">What I've Built</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <p class="project-num">PROJECT_01 ✦ LIVE</p>
+          <h3>The Global Launch</h3>
+          <p>
+            Hosted this portfolio as a static website on Azure Blob Storage — no
+            servers, globally accessible, deployed from scratch as part of
+            DecodeLabs Cloud Computing internship.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">Azure Blob</span
+            ><span class="tag">Static Hosting</span
+            ><span class="tag">Cloud Storage</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <p class="project-num">PROJECT_02 ✦ COMING SOON</p>
+          <h3>Next Milestone</h3>
+          <p>
+            Currently unlocking the next DecodeLabs project. Stay tuned for more
+            cloud infrastructure builds.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">Azure</span><span class="tag">Azure</span
+            ><span class="tag">In Progress</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="contact">
+      <p class="section-label">// 04. contact</p>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-box">
+        <h3>Let's Connect 🚀</h3>
+        <p>
+          I'm open to internship opportunities, collaborations, and cloud
+          engineering discussions. Drop me a message!
+        </p>
+        <div class="contact-links">
+          <a href="mailto:anakorafav@gmail.com" class="btn btn-primary"
+            >Send Email</a
+          >
+          <a
+            href="https://linkedin.com/in/oluchukwu-anakor"
+            class="btn btn-secondary"
+            target="_blank"
+            >LinkedIn</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built &amp; deployed by <span>Oluchukwu Anakor</span> · Hosted on Azure
+        Blob Storage · DecodeLabs Batch 2026
+      </p>
+    </footer>
+  </body>
+</html>
