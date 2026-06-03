@@ -64,6 +64,7 @@ sudo systemctl enable nginx
 **Live Webpage:**
 
 ![Live Page](project-2/live webpage .png)
+```
 
 ---
 
@@ -82,15 +83,79 @@ sudo systemctl enable nginx
 
 ### Challenges I Faced
 
-[Write any errors you hit and how you fixed them]
+## 1. SSH Private Key Not Found
+
+### Challenge
+
+While attempting to connect to the Azure Virtual Machine using SSH, the system could not locate the private key file.
+
+### Error
+
+```bash
+chmod: cannot access '/path/to/myVirtualMachine_key.pem': No such file or directory
+```
+
+### Solution
+
+I realized that the command used a placeholder path. I located the actual private key file and specified the correct file path before retrying the command.
 
 ---
+
+## 2. SSH Private Key Permission Error
+
+### Challenge
+
+After locating the private key file, SSH refused to use it because the file permissions were too open.
+
+### Error
+
+```bash
+WARNING: UNPROTECTED PRIVATE KEY FILE!
+Permissions 0555 are too open.
+```
+
+### Solution
+
+The key file was stored on the Windows filesystem, which does not enforce Linux permissions correctly. I copied the key into my Linux home directory and restricted access using:
+
+```bash
+chmod 400 ~/myVirtualMachine_key.pem
+```
+
+This allowed SSH to use the private key securely.
+
+---
+
+## 3. Difficulty Accessing Files Between Windows and Linux (WSL)
+
+### Challenge
+
+The SSH key was initially stored in the Windows Downloads folder, making it difficult to manage permissions from the Linux environment.
+
+### Solution
+
+I accessed the Windows filesystem through WSL using the `/mnt/c` mount point and copied the file into my Linux home directory, where Linux permissions could be applied correctly.
+
+---
+
+## 4. Establishing Secure Remote Access to the Virtual Machine
+
+### Challenge
+
+Connecting to the Azure Virtual Machine required proper SSH authentication and key management.
+
+### Solution
+
+After correcting the key location and permissions, I successfully connected to the VM using:
+
+```bash
+ssh -i ~/myVirtualMachine_key.pem azureuser@<public-ip-address>
+```
+
+This provided secure remote administrative access to the server.
 
 ### Live Project
 
-Server IP: [102.37.130.227]
+Server IP: [http://102.37.130.227/]
 
 ---
-
-_Part of DecodeLabs Industrial Training Kit — Batch 2026_
-```
