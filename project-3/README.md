@@ -37,10 +37,13 @@ The scenario simulates a real-world problem: an e-commerce company outgrowing Ex
 
 ```
 decodelabs-project3/
-├── azure_db.py       # Python script to connect, create, insert & read
-├── .env              # Local credentials (NOT uploaded to GitHub)
-├── .gitignore        # Tells Git to ignore sensitive files
+├── .env                  # Local credentials (NOT uploaded to GitHub)
+├── .gitignore
+├── azure_db.py           # Python script to connect, create, insert & read
+├── SELECT query result in MySQL tools on vscode.png
+├── Terminal output from running azure_db.py.png
 └── README.md
+
 ```
 
 ---
