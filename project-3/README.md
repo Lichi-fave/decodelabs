@@ -137,6 +137,18 @@ INSERT INTO Interns (Name, Role, Email) VALUES
 
 ---
 
+## Screenshots
+
+### VS Code SQLTools - SELECT Query Result
+
+![SELECT query result](project-3/SELECT query result in MySQL tools on vscode.png)
+
+### Python Script - Terminal Output
+
+![Python terminal output](project-3/Terminal output from running azure_db.py.png)
+
+---
+
 ## What I Learned
 
 - Difference between **relational (MySQL)** and **NoSQL (Cosmos DB)** databases
