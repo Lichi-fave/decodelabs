@@ -1,12 +1,5 @@
 ## Project 1 - The Global Launch
 
-![Azure](https://img.shields.io/badge/Azure-Blob%20Storage-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
-![Static Site](https://img.shields.io/badge/Hosting-Static%20Website-00ff88?style=for-the-badge)
-![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Live-00ff88?style=for-the-badge)
-
----
-
 ### Project Overview
 
 **Mission:** Host a static portfolio website on cloud object storage — without provisioning a single server.
@@ -43,7 +36,7 @@ User (Browser)
  └─────────────────────────────┘
       │
       ▼
- Static Website Served ✅
+ Static Website Served 
  No EC2 · No VM · No OS Management
 ```
 
